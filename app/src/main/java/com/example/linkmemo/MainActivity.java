@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,6 +17,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import  com.example.linkmemo.database.model.LinkInfo;
+import  com.example.linkmemo.database.model.PointInfo;
+import  com.example.linkmemo.database.dao.Link_Dao;
+import  com.example.linkmemo.database.dao.Point_Dao;
 
 public class MainActivity extends AppCompatActivity
         implements HomeFragment.searchClicked, LinkFragment.linkBtnClicked{
@@ -107,13 +113,18 @@ public class MainActivity extends AppCompatActivity
 
     public String findWord(String word)
     {
+        /*
         HashMap<String, String> dictionary = new HashMap<>();
         dictionary.put("articulate", "a.善于表达的;a.口齿清楚的;v.明确表达"+
                 "-apple;banana;panda;tiger-swim;run;good;happy;choose;sing;dance-art;white;" +
                 "black;yellow;blue;green;orange;part");
         dictionary.put("art", "n.艺术;a.艺术性的" + "-apple;animal" + "-articulate;pink" + "-orange");
-        if (dictionary.containsKey(word))
-            return word + ";" + dictionary.get(word);
+        */
+        Point_Dao MyPointDao = new Point_Dao();
+        PointInfo MyPoint = MyPointDao.find_center_word(word);
+
+        if (MyPoint != null)
+            return MyPoint.getPoint_english() + ";" + MyPoint.getPoint_chinese();
         return "";
     }
 }
