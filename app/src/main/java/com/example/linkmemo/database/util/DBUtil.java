@@ -1,5 +1,6 @@
 package com.example.linkmemo.database.util;
 
+
 import java.sql.*;
 
 public class DBUtil {

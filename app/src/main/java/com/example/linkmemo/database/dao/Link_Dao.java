@@ -1,7 +1,6 @@
 package com.example.linkmemo.database.dao;
 
 import com.example.linkmemo.database.model.LinkInfo;
-import com.example.linkmemo.database.dao.Point_Dao;
 import com.example.linkmemo.database.util.DBUtil;
 
 import java.lang.reflect.Field;

@@ -1,5 +1,6 @@
 package com.example.linkmemo.database.model;
 
+
 public class PointInfo {
 
     private String point_english;
