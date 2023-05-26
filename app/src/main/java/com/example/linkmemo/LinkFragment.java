@@ -94,9 +94,15 @@ public class LinkFragment extends Fragment {
                     }
                 }
             });
+            if (linkWord[0] != null)
+            {
+                updateUI(1);
+                updateUI(2);
+                updateUI(3);
+            }
+
         }
-        if (linkWord[0] != null)
-            updateUI(1);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {

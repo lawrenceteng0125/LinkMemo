@@ -74,29 +74,16 @@ public class HomeFragment extends Fragment {
                 String word = searchBar.getText().toString();
                 if (word.isEmpty()) {
                     Toast.makeText(view.getContext(), "输入单词为空", Toast.LENGTH_SHORT).show();
-                    System.out.println("输入单词为空");
                     return;
                 }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String data = MainActivity.getInstance().findWord(word);
-                        searchBar.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //未找到单词
-                                if (data.contentEquals("")) {
-                                    Toast.makeText(view.getContext(), "暂未收录此单词", Toast.LENGTH_SHORT).show();
-                                    System.out.println("暂未收录此单词");
-                                } else {
-                                    mCallback.sendDataToBookAndLink(data);
-                                    MainActivity.getInstance().switchFragment(2, true);
-                                }
-                            }
-                        });
-                    }
-                }).start();
-
+                String data = MainActivity.getInstance().findWord(word);
+                //未找到单词
+                if (data.contentEquals("")) {
+                    Toast.makeText(view.getContext(), "暂未收录此单词", Toast.LENGTH_SHORT).show();
+                } else {
+                    mCallback.sendDataToBookAndLink(data);
+                    MainActivity.getInstance().switchFragment(2, true);
+                }
             }
         });
         return view;
