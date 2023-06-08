@@ -73,13 +73,13 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 String word = searchBar.getText().toString();
                 if (word.isEmpty()) {
-                    Toast.makeText(view.getContext(), "输入单词为空", Toast.LENGTH_SHORT).show();
+                    MainActivity.showText(view, "输入单词为空");
                     return;
                 }
                 String data = MainActivity.getInstance().findWord(word);
                 //未找到单词
                 if (data.contentEquals("")) {
-                    Toast.makeText(view.getContext(), "暂未收录此单词", Toast.LENGTH_SHORT).show();
+                    MainActivity.showText(view, "暂未收录此单词");
                 } else {
                     mCallback.sendDataToBookAndLink(data);
                     MainActivity.getInstance().switchFragment(2, true);

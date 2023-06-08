@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +27,13 @@ public class MainActivity extends AppCompatActivity
     BottomNavigationView bottomNavigationView;
     //Fragments
     FragmentManager manager;
+    LoginFragment loginFragment = new LoginFragment();
     HomeFragment homeFragment = new HomeFragment();
     LinkFragment linkFragment = new LinkFragment();
     BookFragment bookFragment = new BookFragment();
     SettingFragment settingFragment = new SettingFragment();
+
+    SignFragment signInFragment = new SignFragment();
 
     private static MainActivity instance;
     private MainActivityViewModel viewModel;
@@ -42,6 +46,9 @@ public class MainActivity extends AppCompatActivity
     {
         Fragment fragment;
         switch (index){
+            case 0:
+                fragment = loginFragment;
+                break;
             case 1:
                 fragment = homeFragment;
                 if (setBottomNavi)
@@ -56,6 +63,9 @@ public class MainActivity extends AppCompatActivity
                 fragment = bookFragment;
                 if (setBottomNavi)
                     bottomNavigationView.setSelectedItemId(R.id.book);
+                break;
+            case 4:
+                fragment = signInFragment;
                 break;
             default:
                 fragment = settingFragment;
@@ -75,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         //底边栏切换
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         manager = getSupportFragmentManager();
-        switchFragment(1, false);
+        switchFragment(0, false);
         viewModel = new MainActivityViewModel();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -91,7 +101,7 @@ public class MainActivity extends AppCompatActivity
                         switchFragment(3, false);
                         return true;
                     case R.id.setting:
-                        switchFragment(4, false);
+                        switchFragment(5, false);
                         return true;
                 }
                 return false;
@@ -123,5 +133,22 @@ public class MainActivity extends AppCompatActivity
         Log.d("tag", data);
          return data;
        // return "ask;vi.询问,问,要求vt.问,要求,需要,邀请--beg;claim;demand;entreat;implore;pray;request;require-beg;claim;demand;entreat;implore;pray;request;require";
+    }
+
+    public static boolean login(String username, String password)
+    {
+        if (username.equals("tkf") && password.equals("12345"))
+            return true;
+        return false;
+    }
+
+    public static boolean SignIn(String username, String password)
+    {
+        return true;
+    }
+
+    public static void showText(View view, String text)
+    {
+        Toast.makeText(view.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 }

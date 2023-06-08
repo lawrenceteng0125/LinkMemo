@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class LinkFragment extends Fragment {
     View view;
@@ -136,7 +136,9 @@ public class LinkFragment extends Fragment {
     private void updateUI(int index)
     {
         centerBtn.setText(curWord);
-        int siz = linkWord[index - 1].size();
+        int siz = 0;
+        if (linkWord[index - 1] != null)
+            siz = linkWord[index - 1].size();
         setAllInvisible();
         setBtnVisible(siz);
         setBtnColor(siz, Color.parseColor(colors[index - 1]));
@@ -145,14 +147,21 @@ public class LinkFragment extends Fragment {
     }
     public void updateWord(String data)
     {
-        String[] parts = data.split("-");
+        String[] parts = Pattern.compile("-").split(data);
         String[] wordAndMeaning = parts[0].split(";");
-
-        for (int i = 0; i < linkWord.length; i++) {
+        int siz = linkWord.length;
+        if (data.charAt(data.length() - 1) == '-')
+            siz = linkWord.length - 1;
+        for (int i = 0; i < siz; i++) {
+            if (parts[i + 1].isEmpty()) {
+                linkWord[i] = null;
+                continue;
+            }
             linkWord[i] = new ArrayList<>(5);
             String[] words = parts[i + 1].split(";");
             for (String word : words)
-                linkWord[i].add(word);
+                if (!word.isEmpty())
+                    linkWord[i].add(word);
         }
         curWord = wordAndMeaning[0];
     }
